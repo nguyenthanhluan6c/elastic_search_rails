@@ -1,0 +1,32 @@
+h1 ES Search Demo
+
+= form_tag quick_search_path, method: :get
+  = text_field_tag :query, params[:query]
+  = button_tag 'Search'
+
+- if @articles
+  h2
+    | Search
+    small
+      = ' (' + pluralize(@articles.count, 'result') + ')'
+      | &nbsp;
+      - if @articles.respond_to? :took
+        small = 'performed in ' + ( @articles.took.to_f / 1000 ).to_s + ' seconds'
+
+  - if @articles.respond_to? :response and (suggestion = autosuggest_aggregate(@articles.response.suggest, [:title, :text], params[:query]))
+    p
+      | Search instead for:
+      = link_to suggestion, search_path( query: suggestion )
+
+  - @articles.each do |page|
+    article
+      h3 = page.title
+      - if page.respond_to? :highlight
+        p = raw page.highlight.body.to_a.join(' ')
+      - else
+        p = raw truncate(page.body, length: 300)
+
+  - if @articles.count == 0
+    p No articles found
+- else
+  p Enter your search term using the form above

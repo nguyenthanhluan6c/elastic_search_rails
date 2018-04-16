@@ -8,10 +8,12 @@
 
 Faker::Config.locale = :en
 Article.import force: true
-1000.times do
+Person.import force: true
+
+10000.times do
   Article.create title: Faker::Lorem.sentence, text: Faker::Lorem.paragraph
 end
 
-1000.times do
+10000.times do
   Person.create first_name: Faker::Name.first_name, last_name: Faker::Name.last_name
 end

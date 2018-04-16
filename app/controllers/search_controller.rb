@@ -20,14 +20,9 @@ class SearchController < ApplicationController
       {title: article["_source"]["title"], value: article["_source"]["id"]}
     end
     render json: result
+  end
 
+  def misspellings
 
-
-    # render json: Article.auto_complete(params[:term], {
-    #   fields: ["title"],
-    #   limit: 10,
-    #   load: false,
-    #   misspellings: {below: 5},
-    # }).map do |article| { title: article.title, value: article.id } end
   end
 end

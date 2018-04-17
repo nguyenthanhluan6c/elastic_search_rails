@@ -19,9 +19,21 @@ class Article < ApplicationRecord
     __elasticsearch__.search(
       {
         query: {
-          multi_match: {
-            query: query,
-            fields: ['title', 'text']
+          bool: {
+            should: [
+              {
+                wildcard: {title: "*#{query}*"}
+              },
+              {
+                wildcard: {text: "*#{query}*"}
+              },
+              {
+                multi_match: {
+                  query: query,
+                  fields: ["title", "text"]
+                }
+              }
+            ]
           }
         },
         highlight: {
@@ -41,7 +53,7 @@ class Article < ApplicationRecord
       title: title,
       text: text,
       suggest: {
-        input: [title, text],
+        input: [title]
       },
     }
   end
@@ -56,17 +68,12 @@ class Article < ApplicationRecord
         'name-suggest' => {
           text: query,
           completion: {
-            field: 'suggest',
-            fuzzy: {
-              fuzziness: 2
-            }
+            field: 'suggest'
           }
         }
       }
     }
 
-    # self.search(search_definition)
-    # __elasticsearch__.client.suggest index: index_name, body: search_definition
     __elasticsearch__.client.perform_request('GET', "#{index_name}/_search", {}, search_definition).body['suggest']['name-suggest'].first['options']
   end
 end

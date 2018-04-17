@@ -40,6 +40,29 @@ var ready = function() {
     displayKey: "title",
     source: engine.ttAdapter()
   })
+
+  var engine2 = new Bloodhound({
+      datumTokenizer: function(d) {
+          console.log(d);
+          return Bloodhound.tokenizers.whitespace(d.title);
+      },
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      remote: {
+          url: '../name/misspellings/%QUERY'
+      }
+  });
+
+  var promise2 = engine2.initialize();
+
+  promise2
+      .done(function() { console.log('success'); })
+      .fail(function() { console.log('error') });
+
+  $("#name_term").typeahead(null, {
+    name: "person",
+    displayKey: "name",
+    source: engine2.ttAdapter()
+  })
 };
 
 $(document).ready(ready);

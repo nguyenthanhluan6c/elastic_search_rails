@@ -1,12 +1,13 @@
 GIT
-  remote: git://github.com/elasticsearch/elasticsearch-rails.git
-  revision: 7815039c0f78ed0b9b896936875ee4d01855390e
+  remote: https://github.com/elastic/elasticsearch-rails.git
+  revision: 3b6f27d371c848d04488bf77a294fd1ff25929e4
+  branch: 5.x
   specs:
-    elasticsearch-model (6.0.0.alpha1)
+    elasticsearch-model (5.0.2)
       activesupport (> 3)
-      elasticsearch (> 1)
+      elasticsearch (~> 5)
       hashie
-    elasticsearch-rails (6.0.0.alpha1)
+    elasticsearch-rails (5.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -75,12 +76,12 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     crass (1.0.4)
-    elasticsearch (6.0.2)
-      elasticsearch-api (= 6.0.2)
-      elasticsearch-transport (= 6.0.2)
-    elasticsearch-api (6.0.2)
+    elasticsearch (5.0.4)
+      elasticsearch-api (= 5.0.4)
+      elasticsearch-transport (= 5.0.4)
+    elasticsearch-api (5.0.4)
       multi_json
-    elasticsearch-transport (6.0.2)
+    elasticsearch-transport (5.0.4)
       faraday
       multi_json
     erubi (1.7.1)
